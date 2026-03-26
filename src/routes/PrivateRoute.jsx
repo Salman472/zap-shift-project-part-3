@@ -7,7 +7,7 @@ const PrivateRoute = ({children}) => {
     const location=useLocation()
  
     if(loading){
-        <p>loading...</p>
+       return <p>private loading...</p>
     }
     if(!user){
         return <Navigate state={location?.pathname} to={'/login'}/>

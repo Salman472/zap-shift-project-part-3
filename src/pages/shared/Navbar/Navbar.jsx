@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { FaRegCircleUser } from "react-icons/fa6";
 
 const Navbar = () => {
-  const { user, logOut } = useAuth();
+  const { user, logOut, loading } = useAuth();
   console.log(user);
   // log out function
   const handleLogOut = () => {
@@ -55,7 +55,7 @@ const Navbar = () => {
         <NavLink to={"/about-us"}>About Us</NavLink>
       </li>
       <li>
-        <NavLink to={"/pricing"}>Pricing</NavLink>
+        <NavLink to={"/send-parcel"}>Send Parcel</NavLink>
       </li>
       <li>
         <NavLink to={"/blog"}>Blog</NavLink>
@@ -65,6 +65,10 @@ const Navbar = () => {
       </li>
     </>
   );
+  // loading ui in navbar
+  if(loading){
+    return <p>Navbar Loading...</p>
+  }
   return (
     <div className="bg-base-100 shadow-sm">
       <div className="navbar container mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
