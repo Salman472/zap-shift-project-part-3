@@ -60,9 +60,11 @@ const Navbar = () => {
       <li>
         <NavLink to={"/blog"}>Blog</NavLink>
       </li>
-      <li>
-        <NavLink to={"/contact"}>Contact</NavLink>
+     {
+      user &&  <li>
+        <NavLink to={"/be-a-rider"}>Be A Rider</NavLink>
       </li>
+     }
     </>
   );
   // loading ui in navbar
@@ -120,7 +122,7 @@ const Navbar = () => {
               <Link to={"/login"} className="btns hover:bg-primary">
                 SignIn
               </Link>
-              <Link to={"/rider"} className="btnsBg ">
+              <Link to={"/be-a-rider"} className="btnsBg ">
                 Be A Rider
               </Link>
             </>
