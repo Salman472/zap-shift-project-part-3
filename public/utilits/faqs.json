@@ -1,0 +1,18 @@
+[
+    {
+        "id":1,
+        "question":"Is it suitable for all ages and body types?"
+    },
+    {
+        "id":2,
+        "question":"Does it really help with back pain and posture improvement?"
+    },
+    {
+        "id":3,
+        "question":"Does it have smart features like vibration alerts?"
+    },
+    {
+        "id":4,
+        "question":"How will I be notified when the product is back in stock?"
+    }
+]

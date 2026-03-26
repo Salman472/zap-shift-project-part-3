@@ -1,0 +1,43 @@
+/* font config */
+
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+ @import "tailwindcss";
+ @plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+  themes: light --default;
+ }
+ /* color define */
+ @plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #CAEB66;
+  --color-secondary: #03373D;
+  
+}
+
+
+body{
+  font-family: "Urbanist", sans-serif;
+  font-optical-sizing: auto;
+
+  font-style: normal;
+
+}
+
+
+
+/* button style */
+
+.btnsBg{
+  @apply border  border-none border-gray-300 cursor-pointer  py-2 px-4 text-xl font-bold bg-[#CAEB66] rounded-xl
+}
+.btns{
+  @apply border  border-none border-gray-300 cursor-pointer  py-2 px-4 text-xl font-bold outline-1 rounded-xl
+}
+
+/* h1 style */
+.text{
+  @apply  mb-8 text-3xl font-bold
+}
