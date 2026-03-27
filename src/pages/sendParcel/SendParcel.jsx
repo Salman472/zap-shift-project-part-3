@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
+import PricingCalculatorModal from "./PricingCalculator";
 
 const SendParcel = () => {
   const {
@@ -9,17 +10,24 @@ const SendParcel = () => {
     control,
     formState: { errors },
   } = useForm();
-
+const [showModal, setShowModal] = useState(false);
   // data load
   const serviceCenters = useLoaderData();
-  
-  // find region
-  const duplicateRegion = serviceCenters.map((r) => r.region);
-  const region = [...new Set(duplicateRegion)];
-  const watchSenderRegion = useWatch({control,name:"senderRegion"});
+    const watchSenderRegion = useWatch({control,name:"senderRegion"});
   const watchSenderDistrict = useWatch({control,name:"senderDistrict"});
   const watchReceverRegion = useWatch({control,name:"receverRegion"});
   const watchReceverDistrict = useWatch({control,name:"receverDistrict"});
+  // find region
+  // const duplicateRegion = serviceCenters.map((r) => r.region);
+  // const region = [...new Set(duplicateRegion)];
+
+  // ignore unnecessary recalculation
+  const region=useMemo(()=>{
+    const duplicateRegion = serviceCenters.map((r) => r.region);
+    return [...new Set(duplicateRegion)];
+  },[serviceCenters])
+
+
   // find all district
   const districtByRegion = (region) => {
     const regionDistrict = serviceCenters.filter((d) => d.region == region);
@@ -27,6 +35,7 @@ const SendParcel = () => {
     const districts = regionDistrict.map((d) => d.district);
     return districts;
   };
+
   // find all thana
   const thana = (districtByRegion) => {
     const districts = serviceCenters.find(
@@ -37,15 +46,48 @@ const SendParcel = () => {
   
   const handleSendParcel = (data) => {
     console.log(data);
+    // calculate delivery charge
+   const isDocument = data.parcelType === 'document'
+   const isSameDistrict= data.senderDistrict === data.receverDistrict
+   const parcelWeight=parseFloat(data.parcelWeight)
+   let cost = 0
+    if(isDocument){
+      cost = isSameDistrict ? 60 : 80
+    }
+    else{
+      if(parcelWeight <= 3){
+        cost = isSameDistrict ? 110 : 150
+      }
+      else{
+        const minCharge = isSameDistrict ? 110 : 150
+        const extraWeight = parcelWeight - 3
+        const extraCharge = isSameDistrict ? extraWeight * 40 : extraWeight * 40 + 40
+        cost = minCharge + extraCharge
+      }
+    }
+    console.log(cost);
   };
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div className="bg-white rounded-xl shadow p-4 sm:p-6">
         {/* Header */}
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1">
+       <div className="flex justify-between items-center">
+         <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1">
           Send A Parcel
         </h1>
+        <button 
+        onClick={() => setShowModal(true)}
+        className="btn btn-primary text-black"
+      >
+        Open Pricing Calculator
+      </button>
+
+      <PricingCalculatorModal 
+        isOpen={showModal} 
+        onClose={() => setShowModal(false)} 
+      />
+       </div>
         <p className="text-sm sm:text-base text-gray-500 mb-6">
           Enter your parcel details
         </p>
