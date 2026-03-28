@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+
 import { useForm } from "react-hook-form";
 
 const PricingCalculatorModal = ({ isOpen, onClose }) => {
-  const {register, handleSubmit, formState:{errors}}=useForm()
+  const {register, handleSubmit, reset, formState:{errors}}=useForm()
   const handleCalculate=(data)=>{
     console.log(data);
   }
@@ -25,6 +25,7 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
                 </p>
               </div>
               <button
+              type="button"
                 onClick={onClose}
                 className="text-gray-400 hover:text-gray-600 text-3xl leading-none mt-1"
               >
@@ -46,10 +47,10 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
                   Parcel type
                 </label>
                 <select {...register('parcelType', {required:true})} className="select select-bordered w-full bg-white focus:border-emerald-500 focus:ring-emerald-500">
-                  <option value="document" defaultChecked>
-                    document
+                  <option defaultValue={"document"} >
+                    Document
                   </option>
-                  <option value="document">non-document</option>
+                  <option value="non-document">Non-Document</option>
                 </select>
                  {errors.parcelType && (
               <p className="text-red-500 text-sm mt-1">
@@ -65,8 +66,7 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
                 <input 
                 {...register("parcelWeight")}
                   type="number"
-                  step="0.1"
-                  min="0.1"
+                  
                   placeholder="Weight"
                   className="input input-bordered w-full focus:border-emerald-500 focus:ring-emerald-500"
                 />
@@ -78,8 +78,8 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
                 </label>
                 <select {...register('senderRegion', {required:true})} className="select select-bordered w-full bg-white focus:border-emerald-500 focus:ring-emerald-500">
                   <option value="">Select Delivery Destination</option>
-                  <option value="inside">Inside Dhaka</option>
-                  <option value="outside">Outside Dhaka</option>
+                <option > Dhaka</option>
+                  <option > nandail</option>
                 </select>
                  {errors.senderRegion && (
               <p className="text-red-500 text-sm mt-1">
@@ -93,8 +93,8 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
                 </label>
                 <select {...register('senderDistrict', {required:true})} className="select select-bordered w-full bg-white focus:border-emerald-500 focus:ring-emerald-500">
                   <option value="">Select Delivery Destination</option>
-                  <option value="inside">Inside Dhaka</option>
-                  <option value="outside">Outside Dhaka</option>
+                 <option > Dhaka</option>
+                  <option > nandail</option>
                 </select>
                  {errors.senderDistrict && (
               <p className="text-red-500 text-sm mt-1">
@@ -109,8 +109,8 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
                 </label>
                 <select {...register('receverRegion',{required:true})} className="select select-bordered w-full bg-white focus:border-emerald-500 focus:ring-emerald-500">
                   <option value="">Select Delivery Destination</option>
-                  <option value="inside">Inside Dhaka</option>
-                  <option value="outside">Outside Dhaka</option>
+                  <option > Dhaka</option>
+                  <option > nandail</option>
                 </select>
                  {errors.receverRegion && (
               <p className="text-red-500 text-sm mt-1">
@@ -124,8 +124,8 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
                 </label>
                 <select {...register('receverDistrict', {required:true})} className="select select-bordered w-full bg-white focus:border-emerald-500 focus:ring-emerald-500">
                   <option value="">Select Delivery Destination</option>
-                  <option value="inside">Inside Dhaka</option>
-                  <option value="outside">Outside Dhaka</option>
+                  <option > Dhaka</option>
+                  <option > nandail</option>
                 </select>
                  {errors.receverDistrict && (
               <p className="text-red-500 text-sm mt-1">
@@ -141,7 +141,7 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
           {/* Buttons - Fixed at bottom */}
           <div className="p-8 pt-6 border-t border-gray-100 flex-shrink-0 bg-white">
             <div className="flex items-center justify-between gap-4">
-              <input type="reset" value="Reset"  className="btn btn-outline border-gray-300 text-gray-600 hover:bg-gray-50 px-8 flex-1" />
+             <button type="button" onClick={()=>reset()} className="btn btn-outline border-gray-300 text-gray-600 hover:bg-gray-50 px-8 flex-1">Reset</button>
 
               <input type="submit" value="Calculate" className="btn bg-lime-400 hover:bg-lime-500 text-black font-medium px-10 flex-1 border-none disabled:bg-lime-300" />
             </div>
