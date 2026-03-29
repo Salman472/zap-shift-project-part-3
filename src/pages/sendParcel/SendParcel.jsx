@@ -83,7 +83,7 @@ const [showModal, setShowModal] = useState(false);
         Open Pricing Calculator
       </button>
 
-      <PricingCalculatorModal 
+      <PricingCalculatorModal serviceCenters={serviceCenters} 
         isOpen={showModal} 
         onClose={() => setShowModal(false)} 
       />

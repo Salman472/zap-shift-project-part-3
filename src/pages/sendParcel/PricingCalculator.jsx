@@ -1,8 +1,28 @@
 
-import { useForm } from "react-hook-form";
+import { useMemo } from "react";
+import { useForm, useWatch } from "react-hook-form";
 
-const PricingCalculatorModal = ({ isOpen, onClose }) => {
-  const {register, handleSubmit, reset, formState:{errors}}=useForm()
+const PricingCalculatorModal = ({ isOpen, onClose,serviceCenters }) => {
+  // console.log(serviceCenters);
+  const {register, handleSubmit, reset, control, formState:{errors}}=useForm()
+  const watchSenderRegion=useWatch({control, name:'senderRegion'})
+  const watchReceverRegion=useWatch({control, name:'receverRegion'})
+  // get all the region
+  const region=useMemo(()=>{
+    const duplicateRegion=serviceCenters.map(r=>r.region)
+    return [...new Set(duplicateRegion)]
+  },[serviceCenters])
+
+  // console.log(regio);
+
+  // get district by region
+  const districtByRegion = (region) => {
+    const regionDistrict = serviceCenters.filter((d) => d.region == region);
+
+    const districts = regionDistrict.map((d) => d.district);
+    return districts;
+  };
+  console.log(districtByRegion);
   const handleCalculate=(data)=>{
     console.log(data);
   }
@@ -77,9 +97,13 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
                   Sender Region
                 </label>
                 <select {...register('senderRegion', {required:true})} className="select select-bordered w-full bg-white focus:border-emerald-500 focus:ring-emerald-500">
-                  <option value="">Select Delivery Destination</option>
-                <option > Dhaka</option>
-                  <option > nandail</option>
+                  <option value="">Select Sender Region</option>
+                  {
+                    region.map((r,i)=><option key={i} value={r}> {r}</option>)
+                  }
+                  
+                
+                 
                 </select>
                  {errors.senderRegion && (
               <p className="text-red-500 text-sm mt-1">
@@ -92,9 +116,13 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
                   Sender District
                 </label>
                 <select {...register('senderDistrict', {required:true})} className="select select-bordered w-full bg-white focus:border-emerald-500 focus:ring-emerald-500">
-                  <option value="">Select Delivery Destination</option>
-                 <option > Dhaka</option>
-                  <option > nandail</option>
+                  <option value="">Select Sender District</option>
+                  {districtByRegion(watchSenderRegion).map((d, i) => (
+                      <option key={i} value={d}>
+                        {d}
+                      </option>
+                    ))}
+                 
                 </select>
                  {errors.senderDistrict && (
               <p className="text-red-500 text-sm mt-1">
@@ -105,12 +133,14 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
               {/* recever */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Recever Region
+                  Receiver Region
                 </label>
                 <select {...register('receverRegion',{required:true})} className="select select-bordered w-full bg-white focus:border-emerald-500 focus:ring-emerald-500">
-                  <option value="">Select Delivery Destination</option>
-                  <option > Dhaka</option>
-                  <option > nandail</option>
+                  <option value="">Select Receiver Region</option>
+                  {
+                    region.map((r, i)=><option key={i} value={r}>{r}</option>)
+                  }
+                  
                 </select>
                  {errors.receverRegion && (
               <p className="text-red-500 text-sm mt-1">
@@ -120,12 +150,14 @@ const PricingCalculatorModal = ({ isOpen, onClose }) => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Recever District
+                  Receiver District
                 </label>
                 <select {...register('receverDistrict', {required:true})} className="select select-bordered w-full bg-white focus:border-emerald-500 focus:ring-emerald-500">
-                  <option value="">Select Delivery Destination</option>
-                  <option > Dhaka</option>
-                  <option > nandail</option>
+                  <option value="">Select Receiver District</option>
+                  {
+                    districtByRegion(watchReceverRegion).map((d,i)=><option key={i} value={d}>{d}</option>)
+                  }
+                  
                 </select>
                  {errors.receverDistrict && (
               <p className="text-red-500 text-sm mt-1">
