@@ -26,7 +26,7 @@ const PricingCalculatorModal = ({ isOpen, onClose,serviceCenters }) => {
  const handleCalculate = (data) => {
     console.log(data);
     // calculate delivery charge
-   const isDocument = data.parcelType === 'document'
+   const isDocument = data.parcelType.toLowerCase() === 'document'
    const isSameDistrict= data.senderDistrict === data.receverDistrict
    const parcelWeight=parseFloat(data.parcelWeight)
    let cost = 0
@@ -87,7 +87,7 @@ const PricingCalculatorModal = ({ isOpen, onClose,serviceCenters }) => {
                   Parcel type
                 </label>
                 <select {...register('parcelType', {required:true})} className="select select-bordered w-full bg-white focus:border-emerald-500 focus:ring-emerald-500">
-                  <option defaultValue={"document"} >
+                  <option defaultValue={'document'} >
                     Document
                   </option>
                   <option value="non-document">Non-Document</option>
