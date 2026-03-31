@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 
 const PricingCalculatorModal = ({ isOpen, onClose, serviceCenters }) => {
   // console.log(serviceCenters);
@@ -74,6 +75,9 @@ const PricingCalculatorModal = ({ isOpen, onClose, serviceCenters }) => {
                   and zero hassle.
                 </p>
               </div>
+              <button className="text-gray-400 hover:text-gray-600 text-3xl leading-none mt-1 mr-2">
+                <IoMdInformationCircleOutline />
+              </button>
               <button
                 type="button"
                 onClick={onClose}
@@ -231,8 +235,9 @@ const PricingCalculatorModal = ({ isOpen, onClose, serviceCenters }) => {
               <button
                 type="button"
                 onClick={() => {
-                  reset() 
-                  setCalculateCost(null)}}
+                  reset();
+                  setCalculateCost(null);
+                }}
                 className="btn btn-outline border-gray-300 text-gray-600 hover:bg-gray-50 px-8 flex-1"
               >
                 Reset
